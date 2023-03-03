@@ -12,6 +12,10 @@ public class DefaultTeam {
     Tree2D steinerTree = init.computeMST();
 
     return steinerTree;
+    /*Graph g = new Graph(points,hitPoints,edgeThreshold);
+    DivideAndConquer d = new DivideAndConquer(g);
+    Tree2D test = new Tree2D(points.get(0),new ArrayList<>(d.getSubTrees()));
+    return test;*/
   }
   public Tree2D calculSteinerBudget(ArrayList<Point> points, int edgeThreshold, ArrayList<Point> hitPoints) {
     //REMOVE >>>>>

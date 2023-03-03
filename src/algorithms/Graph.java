@@ -7,9 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 public class Graph {
-    private ArrayList<Point> points;
-    private ArrayList<Point> hitPoints;
+    private List<Point> points;
+    private List<Point> hitPoints;
     private int edgeThreshold;
+    private Tree2D value;
 
     // Constructor to initialize the graph
     public Graph(ArrayList<Point> points, ArrayList<Point> hitPoints, int edgeThreshold) {
@@ -36,7 +37,14 @@ public class Graph {
         }
         return graph;
     }
+    public List<Point> getPoints(){
+        return points;
+    }
+    public List<Point> getHitPoints(){
+        return hitPoints;
+    }
 
-
-
+    public int getEdgeThreshold() {
+        return edgeThreshold;
+    }
 }

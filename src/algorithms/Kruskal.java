@@ -3,7 +3,7 @@ package algorithms;
 import java.awt.Point;
 import java.util.*;
 
-public class Kruskal {
+public class Kruskal { //Heuristique des plus court chemains
     HashMap<Edge, Double> graph; // Complete weighted graph K
     private List<Edge> edges;
     private ArrayList<Point> hitPoints;
