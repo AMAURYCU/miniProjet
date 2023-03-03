@@ -7,9 +7,12 @@ import java.util.HashMap;
 public class DefaultTeam {
   public Tree2D calculSteiner(ArrayList<Point> points, int edgeThreshold, ArrayList<Point> hitPoints) {
     Graph g = new Graph(points, hitPoints, edgeThreshold);
+    DivideAndConquer d = new DivideAndConquer(g);
     HashMap<Edge, Double> result = g.constructGraph();
     Kruskal init = new Kruskal(result, hitPoints);
     Tree2D steinerTree = init.computeMST();
+
+    Tree2D tTree = d.getTree();
 
     return steinerTree;
     /*Graph g = new Graph(points,hitPoints,edgeThreshold);
