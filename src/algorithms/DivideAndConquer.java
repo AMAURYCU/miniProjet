@@ -76,20 +76,27 @@ public class DivideAndConquer {
 
         return null;
     }
-
     private static Tree2D buildSubtree(Tree2D currentNode, Tree2D parentNode) {
+        // Create a new list to hold the subtree children
+        ArrayList<Tree2D> newSubTrees = new ArrayList<>();
+
+        // Recursively build subtrees
+        for (Tree2D child : currentNode.getSubTrees()) {
+            // Skip the parent node
+            if (child == parentNode) {
+                continue;
+            }
+
+            newSubTrees.add(buildSubtree(child, currentNode));
+        }
+
         // Remove the parent node from the current node's subtrees
         if (parentNode != null) {
             currentNode.getSubTrees().remove(parentNode);
         }
 
-        // Recursively build subtrees
-        ArrayList<Tree2D> subtrees = new ArrayList<>();
-        for (Tree2D child : currentNode.getSubTrees()) {
-            subtrees.add(buildSubtree(child, currentNode));
-        }
-
-        return new Tree2D(currentNode.getRoot(), subtrees);
+        return new Tree2D(currentNode.getRoot(), newSubTrees);
     }
+
 
 }
