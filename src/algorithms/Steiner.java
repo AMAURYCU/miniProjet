@@ -7,7 +7,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 public class Steiner {
-    /*
+    /**
     Cette classe est la classe appelée dans DefaultTeam. Elle calcule l'arbre steiner avec et sans contrainte de budget.
     Pour ce faire, nous utilisons l'heuristique des plus courts chemins
      */
@@ -34,8 +34,8 @@ public class Steiner {
 
     public static Tree2D budget(int budget) {
 
-
         ArrayList<Point> visited = new ArrayList<>();
+        ArrayList<Edge> newEdges = new ArrayList<>();
         visited.add(hitPoints.get(0));
 
         double cost = 0.0;
@@ -57,15 +57,7 @@ public class Steiner {
             pointToEdge.get(v).add(e);
         }
 
-        for (ArrayList<Edge> edgeList : pointToEdge.values()) {
-            Collections.sort(edgeList, new Comparator<Edge>() {
-                public int compare(Edge e1, Edge e2) {
-                    return Double.compare(e1.getWeight(), e2.getWeight());
-                }
-            });
-        }
-
-        Edge minEdge = new Edge(new Point(0, 0), new Point(0, 0), 0);
+        Edge minEdge;
 
         while (cost <= budget) {
             minEdge = findMinimumEdge(pointToEdge, visited);
@@ -85,13 +77,8 @@ public class Steiner {
                 visited.add(Q);
             }
             cost += minEdge.getWeight();
+            newEdges.add(minEdge);
         }
-
-        visited.remove(minEdge.getStart());
-        visited.remove(minEdge.getEnd());
-
-        Kruskal newK = new Kruskal(graph, visited);
-        ArrayList<Edge> newEdges = newK.computeMST();
 
         return buildTree(newEdges);
 
