@@ -15,7 +15,7 @@ public class Kruskal {
     }
 
     // Compute the minimum spanning tree T using Kruskal's algorithm
-    public Tree2D computeMST() {
+    public ArrayList<Edge> computeMST() {
         // Sort the edges in graph in increasing order of weight
         edges = new ArrayList<Edge>(graph.keySet());
         Collections.sort(edges, new Comparator<Edge>() {
@@ -36,60 +36,10 @@ public class Kruskal {
             }
         }
 
-        // Initialize H as a new HashMap to store the resulting graph
-        ArrayList<Edge> H = new ArrayList<>();
-
-        // Iterate through the edges in the minimum spanning tree T
-        for (Edge e : mstEdges) {
-            Point u = e.getStart();
-            Point v = e.getEnd();
-
-            // Calculate the shortest path between u and v in G
-            ArrayList<Edge> path = Path.getShortestPath(u, v);
-
-            // Add each edge in the path to H, with its weight equal to the weight of the original edge in T
-            for (int i = 0; i < path.size() - 1; i++) {
-                H.add(path.get(i));
-            }
-        }
-
-        HashMap<Point, Tree2D> pointToTree = new HashMap<>();
-        for (Edge e : H) {
-            Point u = e.getStart();
-            Point v = e.getEnd();
-
-            if (!pointToTree.containsKey(u)) {
-                pointToTree.put(u, new Tree2D(u, new ArrayList<>()));
-            }
-
-            if (!pointToTree.containsKey(v)) {
-                pointToTree.put(v, new Tree2D(v, new ArrayList<>()));
-            }
-
-            pointToTree.get(u).getSubTrees().add(pointToTree.get(v));
-            pointToTree.get(v).getSubTrees().add(pointToTree.get(u));
-        }
-
-        // Build the tree recursively
-        Tree2D steinerTree = buildSubtree(pointToTree.get(H.get(0).getStart()), null);
-
-        return steinerTree;
+        return mstEdges;
     }
 
-    private static Tree2D buildSubtree(Tree2D currentNode, Tree2D parentNode) {
-        // Remove the parent node from the current node's subtrees
-        if (parentNode != null) {
-            currentNode.getSubTrees().remove(parentNode);
-        }
 
-        // Recursively build subtrees
-        ArrayList<Tree2D> subtrees = new ArrayList<>();
-        for (Tree2D child : currentNode.getSubTrees()) {
-            subtrees.add(buildSubtree(child, currentNode));
-        }
-
-        return new Tree2D(currentNode.getRoot(), subtrees);
-    }
 
     // Helper class to implement the Union-Find algorithm
     class UnionFind {
