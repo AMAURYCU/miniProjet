@@ -23,7 +23,7 @@ public class Edge {
     public Edge(Point u, Point v) {
         this.start = u;
         this.end = v;
-        weigth = FloydWarshall.getShortestDist(u, v);
+        this.weigth = FloydWarshall.getShortestDist(u, v);
     }
 
     public Point getStart() {
