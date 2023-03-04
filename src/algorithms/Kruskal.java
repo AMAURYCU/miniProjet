@@ -4,12 +4,13 @@ import java.awt.Point;
 import java.util.*;
 
 public class Kruskal {
-    HashMap<Edge, Double> graph; // Complete weighted graph K
+    //TODO refactor
+    ArrayList<Edge> graph; // Complete weighted graph K
     private List<Edge> edges;
     private ArrayList<Point> hitPoints;
 
     // Constructor
-    public Kruskal(HashMap<Edge, Double> graph, ArrayList<Point> hitPoints) {
+    public Kruskal(ArrayList<Edge> graph, ArrayList<Point> hitPoints) {
         this.graph = graph;
         this.hitPoints = hitPoints;
     }
@@ -17,17 +18,16 @@ public class Kruskal {
     // Compute the minimum spanning tree T using Kruskal's algorithm
     public ArrayList<Edge> computeMST() {
         // Sort the edges in graph in increasing order of weight
-        edges = new ArrayList<Edge>(graph.keySet());
-        Collections.sort(edges, new Comparator<Edge>() {
+        Collections.sort(graph, new Comparator<Edge>() {
             public int compare(Edge e1, Edge e2) {
-                return Double.compare(graph.get(e1), graph.get(e2));
+                return Double.compare(e1.getWeight(), e2.getWeight());
             }
         });
 
         UnionFind uf = new UnionFind(this.hitPoints);
 
         ArrayList<Edge> mstEdges = new ArrayList<>();
-        for (Edge edge : edges) {
+        for (Edge edge : graph) {
             Point u = edge.getStart();
             Point v = edge.getEnd();
             if (uf.find(u) != uf.find(v)) {

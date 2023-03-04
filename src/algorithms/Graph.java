@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Graph {
+    //TODO
     private ArrayList<Point> points;
     private ArrayList<Point> hitPoints;
     private int edgeThreshold;
@@ -16,27 +17,23 @@ public class Graph {
         this.points = points;
         this.hitPoints = hitPoints;
         this.edgeThreshold = edgeThreshold;
-
-        new Path(points, edgeThreshold);
     }
 
     // Method to construct the complete weighted graph K
-    public HashMap<Edge, Double> constructGraph() {
+    public ArrayList<Edge> constructGraph() {
 
-        HashMap<Edge, Double> graph = new HashMap<>();
+        ArrayList<Edge> graph = new ArrayList<>();
 
         for (int i = 0; i < hitPoints.size(); i++) {
             for (int j = i + 1; j < hitPoints.size(); j++) {
                 Point u = hitPoints.get(i);
                 Point v = hitPoints.get(j);
-                double shortestDist = Path.getShortestDist(u, v);
-                Edge edge = new Edge(u, v, shortestDist);
-                graph.put(edge, shortestDist);
+
+                Edge edge = new Edge(u, v);
+                graph.add(edge);
             }
         }
         return graph;
     }
-
-
 
 }
