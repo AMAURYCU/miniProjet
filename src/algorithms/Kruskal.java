@@ -23,6 +23,8 @@ public class Kruskal {
             }
         });
 
+        //Union-Find data structure is used to determine whether adding an edge between two vertices
+        // would create a cycle in the graph
         UnionFind uf = new UnionFind(this.hitPoints);
 
         ArrayList<Edge> mstEdges = new ArrayList<>();
@@ -51,7 +53,7 @@ public class Kruskal {
             }
         }
 
-        Point find(Point p) {
+        Point find(Point p) { //operation is used to determine whether the two endpoints of an edge belong to the same set
             Point root = p;
             while (parent.get(root) != root) {
                 root = parent.get(root);
@@ -64,7 +66,7 @@ public class Kruskal {
             return root;
         }
 
-        void union(Point u, Point v) {
+        void union(Point u, Point v) { //operation is used to merge the sets containing the endpoints of each edge
             Point rootU = find(u);
             Point rootV = find(v);
             parent.put(rootU, rootV);
