@@ -16,7 +16,7 @@ public class Graph {
     }
 
     // Method to construct the complete weighted graph K
-    public ArrayList<Edge> constructGraph() {
+    public ArrayList<Edge> constructGraph() { //O(n²)
 
         ArrayList<Edge> graph = new ArrayList<>();
 

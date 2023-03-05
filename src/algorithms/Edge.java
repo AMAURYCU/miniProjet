@@ -10,7 +10,7 @@ public class Edge {
 
     //constructor to use when you need to force a weight value
     public Edge(Point u, Point v, double weight) {
-        //par exemple dans la classe Steiner
+        //exemple in Steiner class in whitch we need to create an edge with a weight = infinity
         this.start = u;
         this.end = v;
         this.weigth = weight;

@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Kruskal {
     ArrayList<Edge> graph; // Complete weighted graph K
-    private List<Edge> edges;
+
     private ArrayList<Point> hitPoints;
 
     // Constructor

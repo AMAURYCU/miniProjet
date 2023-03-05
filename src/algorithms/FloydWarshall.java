@@ -16,8 +16,8 @@ public class FloydWarshall {
         calculateShortestPath();
     }
 
-    // Method to calculate the shortest path between two points using Floyd-Warshall algorithm
-    private void calculateShortestPath() {
+
+    private void calculateShortestPath() {   // Method to calculate the shortest path between two points using Floyd-Warshall algorithm (O(n^3))
         int n = points.size();
         double[][] distance = new double[n][n];
         int[][] access = new int[n][n];
@@ -57,7 +57,7 @@ public class FloydWarshall {
         FloydWarshall.access = access;
     }
 
-    public static double getShortestDist(Point u, Point v)
+    public static double getShortestDist(Point u, Point v)//Return the shortest distance between u and v (O(1))
     {
         int uIndex = points.indexOf(u);
         int vIndex = points.indexOf(v);
@@ -66,7 +66,7 @@ public class FloydWarshall {
     }
 
     public static ArrayList<Edge> getShortestPath(Point u, Point v) {
-
+        //Return the list of the edges whitch you need to take to join u and v (O(n))
         int uIndex = points.indexOf(u);
         int vIndex = points.indexOf(v);
 
