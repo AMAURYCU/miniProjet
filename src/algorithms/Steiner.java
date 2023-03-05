@@ -39,7 +39,7 @@ public class Steiner {
     /**
      * @return a Minimum Spanning Tree
      */
-    public static Tree2D withoutBudget() {//quand il n y as pas de budjet on retourne juste l'arbre obtenu par Kruskal
+    public static Tree2D withoutBudget() {
         return buildTree(Steiner.mstEdges);
     }
 
