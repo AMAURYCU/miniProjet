@@ -4,7 +4,6 @@ import java.awt.Point;
 import java.util.*;
 
 public class Kruskal {
-    //TODO refactor
     ArrayList<Edge> graph; // Complete weighted graph K
     private List<Edge> edges;
     private ArrayList<Point> hitPoints;

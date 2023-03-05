@@ -2,16 +2,18 @@ package algorithms;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 
 public class Steiner {
     /**
-    Cette classe est la classe appelée dans DefaultTeam. Elle calcule l'arbre steiner avec et sans contrainte de budget.
-    Pour ce faire, nous utilisons l'heuristique des plus courts chemins
+     * Heuristic :
+     * - Calculate distance matrix and access matrix for all points from "points" using Floyd-Warshall's algorithm
+     * - Construct a complete weighted graph of all possible edges for "hitPoints" using weights from distance matrix
+     * - Construct a minimum spanning tree based on a weighted graph using the Kruskal Union-Find algorithm
+     * - Replace each edge of the tree with the shortest path from the access matrix
+     *
+     This class is the class called in DefaultTeam. It computes the steiner tree with and without budget constraints.
      */
-
 
     private static Graph g;
     private static ArrayList<Edge> graph;
@@ -19,6 +21,12 @@ public class Steiner {
     private static ArrayList<Edge> mstEdges;
     private static ArrayList<Point> hitPoints;
 
+    /**
+     * use the shortest path heuristic
+     * @param points points on the plan
+     * @param hitPoints terminal points on the plan
+     * @param edgeThreshold threshold value for edge distance in graph
+     */
     public Steiner(ArrayList<Point> points, int edgeThreshold, ArrayList<Point> hitPoints) {
         new FloydWarshall(points, edgeThreshold);
         g = new Graph(points, hitPoints, edgeThreshold);
@@ -28,18 +36,28 @@ public class Steiner {
         Steiner.hitPoints = hitPoints;
     }
 
+    /**
+     * @return a Minimum Spanning Tree
+     */
     public static Tree2D withoutBudget() {//quand il n y as pas de budjet on retourne juste l'arbre obtenu par Kruskal
         return buildTree(Steiner.mstEdges);
     }
 
+    /**
+     * @param budget is a Minimum Spanning Tree's weight constraint
+     * @return a Minimum Spanning Tree
+     */
     public static Tree2D budget(int budget) {
 
         ArrayList<Point> visited = new ArrayList<>();
         ArrayList<Edge> newEdges = new ArrayList<>();
+
         visited.add(hitPoints.get(0));
 
         double cost = 0.0;
 
+        // for each point, construct a list of edges that it is connected to
+        // edged are sorted by weight in ascending order
         HashMap<Point, ArrayList<Edge>> pointToEdge = new HashMap<>();
         for (Edge e : mstEdges) {
             Point u = e.getStart();
@@ -60,23 +78,27 @@ public class Steiner {
         Edge minEdge;
 
         while (cost <= budget) {
+            //find the minimum weighted edge connected to one of visited points
             minEdge = findMinimumEdge(pointToEdge, visited);
 
             if (cost + minEdge.getWeight() > budget) {
                 break;
             }
 
-            Point P = minEdge.getStart();
-            Point Q = minEdge.getEnd();
-            pointToEdge.get(P).remove(minEdge);
-            pointToEdge.get(Q).remove(minEdge);
-            if (!visited.contains(P)) {
-                visited.add(P);
+            Point u = minEdge.getStart();
+            Point v = minEdge.getEnd();
+            //remove this edge from the list for current points
+            pointToEdge.get(u).remove(minEdge);
+            pointToEdge.get(v).remove(minEdge);
+
+            if (!visited.contains(u)) {
+                visited.add(u);
             }
-            if (!visited.contains(Q)) {
-                visited.add(Q);
+            if (!visited.contains(v)) {
+                visited.add(v);
             }
             cost += minEdge.getWeight();
+            //form new edges array
             newEdges.add(minEdge);
         }
 
@@ -84,10 +106,16 @@ public class Steiner {
 
     }
 
+    /**
+     * @param pointToEdge for each point, maps the list of edges to which it is connected
+     * @param points is a list of points for which we are looking for the minimum connected edge
+     * @return a Minimum Edge
+     */
     private static Edge findMinimumEdge(HashMap<Point, ArrayList<Edge>> pointToEdge, ArrayList<Point> points) {
         Edge minEdge = new Edge(new Point(0, 0), new Point(0, 0), Double.POSITIVE_INFINITY);
         for (Point point : points) {
             if (!pointToEdge.get(point).isEmpty()) {
+                //We take 0 element because it's minimum weighted edge in list
                 if (pointToEdge.get(point).get(0).getWeight() < minEdge.getWeight()) {
                     minEdge = pointToEdge.get(point).get(0);
                 }
@@ -96,6 +124,11 @@ public class Steiner {
         return minEdge;
     }
 
+    /**
+     * @param currentNode is a root node
+     * @param parentNode is a parent node for current node
+     * @return a Tree2D Steiner Tree
+     */
     private static Tree2D buildSubtree(Tree2D currentNode, Tree2D parentNode) {
         // Remove the parent node from the current node's subtrees
         if (parentNode != null) {
@@ -111,8 +144,12 @@ public class Steiner {
         return new Tree2D(currentNode.getRoot(), subtrees);
     }
 
-
+    /**
+     * @param mstEdges list of edges which form the Steiner tree
+     * @return a Tree2D Steiner Tree
+     */
     private static Tree2D buildTree(ArrayList<Edge> mstEdges) {
+
         // Initialize H as a new HashMap to store the resulting graph
         ArrayList<Edge> H = new ArrayList<>();
 

@@ -2,12 +2,8 @@ package algorithms;
 
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class Graph {
-    //TODO
     private ArrayList<Point> points;
     private ArrayList<Point> hitPoints;
     private int edgeThreshold;

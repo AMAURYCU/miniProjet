@@ -9,7 +9,6 @@ public class FloydWarshall {
     private static double[][] distance;
     private static int[][] access;
 
-    // Constructor to initialize the graph
     public FloydWarshall(ArrayList<Point> points, int edgeThreshold) {
         FloydWarshall.points = points;
         this.edgeThreshold = edgeThreshold;

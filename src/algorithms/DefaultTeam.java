@@ -2,7 +2,6 @@ package algorithms;
 
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class DefaultTeam {
   public Tree2D calculSteiner(ArrayList<Point> points, int edgeThreshold, ArrayList<Point> hitPoints) {
