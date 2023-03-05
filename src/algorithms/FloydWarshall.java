@@ -66,7 +66,7 @@ public class FloydWarshall {
     }
 
     public static ArrayList<Edge> getShortestPath(Point u, Point v) {
-        //Return the list of the edges whitch you need to take to join u and v (O(n))
+        //Return the list of the edges which you need to take to join u and v (O(n))
         int uIndex = points.indexOf(u);
         int vIndex = points.indexOf(v);
 

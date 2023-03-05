@@ -29,7 +29,7 @@ public class Steiner {
      */
     public Steiner(ArrayList<Point> points, int edgeThreshold, ArrayList<Point> hitPoints) {
         new FloydWarshall(points, edgeThreshold);
-        g = new Graph(points, hitPoints, edgeThreshold);
+        g = new Graph(hitPoints);
         graph = g.constructGraph();
         k = new Kruskal(graph, hitPoints);
         mstEdges = k.computeMST();

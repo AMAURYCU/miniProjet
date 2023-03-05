@@ -4,15 +4,11 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 public class Graph {
-    private ArrayList<Point> points;
     private ArrayList<Point> hitPoints;
-    private int edgeThreshold;
 
     // Constructor to initialize the graph
-    public Graph(ArrayList<Point> points, ArrayList<Point> hitPoints, int edgeThreshold) {
-        this.points = points;
+    public Graph(ArrayList<Point> hitPoints) {
         this.hitPoints = hitPoints;
-        this.edgeThreshold = edgeThreshold;
     }
 
     // Method to construct the complete weighted graph K
